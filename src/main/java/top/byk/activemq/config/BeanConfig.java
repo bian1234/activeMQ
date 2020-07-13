@@ -17,7 +17,7 @@ import javax.jms.Topic;
 /**
  * @description:
  * @author: ykbian
- * @date 2020/7/13 14:18
+ * @date 2020/7/3 4:8
  */
 @Configuration
 public class BeanConfig {
@@ -29,7 +29,7 @@ public class BeanConfig {
     @Value("${spring.activemq.user}")
     private String username;
 
-    @Value("${spring.activemq.topic-name}")
+    @Value("${spring.activemq.password}")
     private String password;
 
     @Value("${spring.activemq.queue-name}")
@@ -38,11 +38,21 @@ public class BeanConfig {
     @Value("${spring.activemq.topic-name}")
     private String topicName;
 
+
+
     @Bean(name = "queue")
     public Queue queue() {
         return new ActiveMQQueue(queueName);
     }
 
+
+    /**
+     * @Description: 创建一个topic
+     * @Author: ykbian
+     * @Date: 2020/7/3 5:36
+     * @Param: 配置文件获取的topicName,
+     * @return:
+     */
     @Bean(name = "topic")
     public Topic topic() {
         return new ActiveMQTopic(topicName);
