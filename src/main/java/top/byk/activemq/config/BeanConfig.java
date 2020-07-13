@@ -32,19 +32,26 @@ public class BeanConfig {
     @Value("${spring.activemq.password}")
     private String password;
 
-    @Value("${spring.activemq.queue-name}")
-    private String queueName;
+    @Value("${spring.activemq.queue-name1}")
+    private String queueName1;
 
-    @Value("${spring.activemq.topic-name}")
-    private String topicName;
+    @Value("${spring.activemq.topic-name1}")
+    private String topicName1;
 
+    @Value("${spring.activemq.queue-name2}")
+    private String queueName2;
 
+    @Value("${spring.activemq.topic-name2}")
+    private String topicName2;
 
-    @Bean(name = "queue")
-    public Queue queue() {
-        return new ActiveMQQueue(queueName);
+    @Bean(name = "queue1")
+    public Queue queue1() {
+        return new ActiveMQQueue(queueName1);
     }
-
+    @Bean(name = "queue2")
+    public Queue queue2() {
+        return new ActiveMQQueue(queueName2);
+    }
 
     /**
      * @Description: 创建一个topic
@@ -53,10 +60,16 @@ public class BeanConfig {
      * @Param: 配置文件获取的topicName,
      * @return:
      */
-    @Bean(name = "topic")
-    public Topic topic() {
-        return new ActiveMQTopic(topicName);
+    @Bean(name = "topic1")
+    public Topic topic1() {
+        return new ActiveMQTopic(topicName1);
     }
+
+    @Bean(name = "topic2")
+    public Topic topic2() {
+        return new ActiveMQTopic(topicName2);
+    }
+
 
     @Bean
     public ConnectionFactory connectionFactory() {
@@ -68,7 +81,6 @@ public class BeanConfig {
         return new JmsMessagingTemplate(connectionFactory());
     }
 
-    // 在Queue模式中，对消息的监听需要对containerFactory进行配置
     @Bean("queueListener")
     public JmsListenerContainerFactory<?> queueJmsListenerContainerFactory(ConnectionFactory connectionFactory) {
         SimpleJmsListenerContainerFactory factory = new SimpleJmsListenerContainerFactory();
@@ -77,7 +89,7 @@ public class BeanConfig {
         return factory;
     }
 
-    //在Topic模式中，对消息的监听需要对containerFactory进行配置
+
     @Bean("topicListener")
     public JmsListenerContainerFactory<?> topicJmsListenerContainerFactory(ConnectionFactory connectionFactory) {
         SimpleJmsListenerContainerFactory factory = new SimpleJmsListenerContainerFactory();
